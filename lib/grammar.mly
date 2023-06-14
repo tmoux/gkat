@@ -1,6 +1,6 @@
-%{ open Expr %}
-%{ open TestImpl %}
-%{ open MyTest %}
+%{ open Expr
+   open TestImpl 
+   open MyTest %}
 
 %token L_PARENS
 %token R_PARENS

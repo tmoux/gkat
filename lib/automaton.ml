@@ -15,7 +15,6 @@ module type AUTOMATON = sig
   val trans : 'action t -> s -> atom -> ('action, s) transition
   val from_expr : ('action, test) expr -> 'action t
   val reify : 'action t -> 'action Bisimulation.normalized_automaton
-
 end
 
 module AutomatonExn (A : AUTOMATON) = struct
@@ -34,20 +33,3 @@ module AutomatonExn (A : AUTOMATON) = struct
     let a = reify (from_expr e) and b = reify (from_expr f) in
     Bisimulation.decide_equivalence a b
 end
-
-(* First implementation:
-   States are references to their transition functions. Represent transition function as a map.
-   When adjoining two automata: need to keep track of the initial pseudostate and update its transitions
-   States should not be exposed outside the module.
-*)
-
-(*
-let show_seq f delim lst =
-  let rec loop seq =
-    match seq () with
-    | Seq.Nil -> ""
-    | Seq.Cons (x, xs) -> f x ^ delim ^ loop xs
-  in
-  "[" ^ loop lst ^ "]"
-  *)
-

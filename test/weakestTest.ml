@@ -1,4 +1,4 @@
-open Gkatlib.Expr
+open Gkat.Expr
 
 module WeakestTest(T : TEST) = struct
   open T

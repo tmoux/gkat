@@ -1,5 +1,3 @@
-let asdf = "HI"
-
 type 't bexpr =
   | B0
   | B1
@@ -26,8 +24,8 @@ type ('a, 't) expr =
 
 let rec show_expr f g = function
   | Do(x) -> f x
-  | Assert(x) -> g x
-  | Seq(e, e') -> Format.sprintf "%s; %s" (show_expr f g e) (show_expr f g e')
+  | Assert(x) -> Format.sprintf "assert (%s)" (g x)
+  | Seq(e, e') -> Format.sprintf "(%s; %s)" (show_expr f g e) (show_expr f g e')
   | If(b, e, e') -> Format.sprintf "if %s then (%s) else (%s)" (g b) (show_expr f g e) (show_expr f g e')
   | While(b, e) -> Format.sprintf "while %s do (%s)" (g b) (show_expr f g e)
 
@@ -37,7 +35,4 @@ module type TEST = sig
 
   val entails : atom -> t bexpr -> bool
   val getAtoms : atom Seq.t
-
-  (* val show_t : t -> string
-  val show_atom : atom -> string *)
 end

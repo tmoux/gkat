@@ -1,6 +1,6 @@
 (test
- (name gkat)
- (libraries gkatlib ounit2 qcheck))
+ (name gkattest)
+ (libraries gkat ounit2 qcheck))
 
 (env
  (dev

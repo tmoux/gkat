@@ -1,0 +1,3 @@
+while b do e
+(while b do e; assert(!b))
+

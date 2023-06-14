@@ -1,5 +1,11 @@
 (library
- (name gkatlib))
+ (name gkat)
+ (libraries menhirLib))
+
+(menhir
+ (modules grammar))
+
+(ocamllex lexer)
 
 (env
  (dev

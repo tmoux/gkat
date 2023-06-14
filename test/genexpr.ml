@@ -1,11 +1,14 @@
-open Gkatlib.Expr
-
+open Gkat.Expr
+open Gkat.TestImpl
 
 let btest x = BTest x
 let band x y = BAnd (x, y)
 let bor x y = BOr (x, y)
 let bnot x = BNot x
-let gent = QCheck.Gen.oneofl [ "b"; "c" ]
+
+let gent =
+  let open MyTest in
+  QCheck.Gen.oneofl [ B; C; D ]
 
 let gentest sz (gent : 't QCheck.Gen.t) : 't bexpr QCheck.Gen.t =
   let open QCheck.Gen in
@@ -33,7 +36,9 @@ let genexpr sz genac gentest =
   sized_size sz
   @@ fix (fun self n ->
          match n with
-         | 0 -> oneof [ map (fun x -> Do x) genac; map (fun x -> Assert x) gentest ]
+         | 0 ->
+             oneof
+               [ map (fun x -> Do x) genac; map (fun x -> Assert x) gentest ]
          | n ->
              frequency
                [
@@ -50,14 +55,15 @@ let genexpr sz genac gentest =
                ])
 
 (* The type of actions doesn't really matter, so let's just pick our set of actions to be one-letter strings since they're easy to print: *)
-let genac = QCheck.Gen.oneofl ["p"; "q"; "r"; "s"; "t"; "u"]
+let genac = QCheck.Gen.oneofl [ "p"; "q"; "r"; "s"; "t"; "u" ]
 
 let arbitrary_test =
   let open QCheck.Gen in
   let sz_test = 15 in
   QCheck.make (gentest (int_bound sz_test) gent)
 
-let arbitrary_expr = 
+let arbitrary_expr =
   let open QCheck.Gen in
   let sz_expr = 20 and sz_test = 20 in
-  QCheck.make (genexpr (int_bound sz_expr) genac (gentest (int_bound sz_test) gent))
+  QCheck.make
+    (genexpr (int_bound sz_expr) genac (gentest (int_bound sz_test) gent))

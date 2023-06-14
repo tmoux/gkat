@@ -1,4 +1,4 @@
 (executable
  (public_name gkat)
  (name main)
- (libraries gkatlib))
+ (libraries gkat))

@@ -1,4 +1,5 @@
 (lang dune 3.7)
+(using menhir 2.1)
 
 (name gkat)
 
@@ -17,7 +18,7 @@
  (name gkat)
  (synopsis
   "An automata-based decision procedure for equivalence of GKAT programs")
- (depends ocaml dune ounit2 qcheck)
+ (depends ocaml dune ounit2 qcheck menhir)
  )
  ; (tags
  ;  (topics "to describe" your project)))
